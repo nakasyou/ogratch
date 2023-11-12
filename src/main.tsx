@@ -70,6 +70,7 @@ app.get('/p/:projectId', async c => {
         <meta property="og:url" content={link} />
         <meta property="og:image" content={`https://ogratch.deno.dev/thumbnail/p/${projectId}`} />
         <meta property="og:description" content={data.description} />
+        <meta name="twitter:card" content="summary_large_image">
       </head>
       <body>
         <a href={link}>Push!</a>
