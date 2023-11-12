@@ -30,18 +30,18 @@ app.get('/', async c => {
 })
 app.get('/p/:projectId', async c => {
   const projectId = c.req.param('projectId')
+  const link = `https://scratch.mit.edu/projects/${projectId}`
   return c.html(html`<!DOCTYPE HTML>${
     <html lang="ja">
       <head>
         <meta charset="UTF-8" />
         <title>Ogratch</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="" /><
-
-
+        <meta name="description" content="" />
+        <meta http-equiv="refresh" content={`0;URL='${link}'`} />
       </head>
       <body>
-        <a href={`https://scratch.mit.edu/projects/${projectId}`}>Push!</a>
+        <a href={link}>Push!</a>
       </body>
     </html>
   }`)
