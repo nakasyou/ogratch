@@ -71,3 +71,5 @@ app.get('/p/:projectId', async c => {
     </html>
   }`)
 })
+
+Deno.serve(app.fetch)
