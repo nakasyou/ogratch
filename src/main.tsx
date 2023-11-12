@@ -49,13 +49,14 @@ app.get('/p/:projectId', async c => {
     console.log('nonbot')
     return c.redirect(link, 302)
   }
-  const data = await fetch(`https://scratchdb.lefty.one/v3/project/info/${projectId}`).then(res => res.json())
+  let data = await fetch(`https://scratchdb.lefty.one/v3/project/info/${projectId}`).then(res => res.json())
 
   if (data.error) {
-    console.log("err")
-    return c.notFound()
+    data = {
+      title: 'unknown', description: 'unknown',
+
+    }
   }
-  console.log('bot')
   return c.html(html`<!DOCTYPE HTML>${
     <html lang="ja">
       <head>
