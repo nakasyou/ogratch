@@ -28,6 +28,10 @@ app.get('/', async c => {
     </html>
   }`)
 })
+app.get('/thumbnail/p/:thumbnailId', async c => {
+  const projectId = c.req.param('thumbnailId')
+  return await fetch(`https://uploads.scratch.mit.edu/get_image/project/${projectId}_480x360.png`)
+})
 app.get('/p/:projectId', async c => {
   const projectId = c.req.param('projectId')
   const link = `https://scratch.mit.edu/projects/${projectId}`
@@ -64,7 +68,7 @@ app.get('/p/:projectId', async c => {
         <meta property="og:title" content={data.title} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={link} />
-        <meta property="og:image" content={`https://uploads.scratch.mit.edu/get_image/project/${projectId}_480x360.png`} />
+        <meta property="og:image" content={`https://ogratch.deno.dev/thumbnail/p/${projectId}`} />
         <meta property="og:description" content={data.description} />
       </head>
       <body>
