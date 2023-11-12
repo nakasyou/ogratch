@@ -49,7 +49,7 @@ app.get('/p/:projectId', async c => {
   if (data.error) {
     return c.notFound()
   }
-  
+  console.log('bot')
   return c.html(html`<!DOCTYPE HTML>${
     <html lang="ja">
       <head>
