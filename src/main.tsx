@@ -65,7 +65,7 @@ app.get('/p/:projectId', async c => {
         <meta property="og:type" content="article" />
         <meta property="og:url" content={link} />
         <meta property="og:image" content={`https://uploads.scratch.mit.edu/get_image/project/${projectId}_480x360.png`} />
-        <meta property="og:description" content={sara.description} />
+        <meta property="og:description" content={data.description} />
       </head>
       <body>
         <a href={link}>Push!</a>
