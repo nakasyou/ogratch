@@ -33,7 +33,7 @@ app.get('/p/:projectId', async c => {
   const link = `https://scratch.mit.edu/projects/${projectId}`
   
   const userAgent = (c.req.header('User-Agent') || '').toLowerCase()
-  consple.log(userAgent)
+  console.log(userAgent)
   if (!
     (
       userAgent.includes('twitter') ||
