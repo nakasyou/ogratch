@@ -31,6 +31,25 @@ app.get('/', async c => {
 app.get('/p/:projectId', async c => {
   const projectId = c.req.param('projectId')
   const link = `https://scratch.mit.edu/projects/${projectId}`
+  
+  const userAgent = (c.req.header('User-Agent') || '').toLowerCase()
+  consple.log(userAgent)
+  if (!
+    (
+      userAgent.includes('twitter') ||
+      userAgent.includes('discord') ||
+      userAgent.includes('facebook') ||
+      userAgent.includes('slackbot')
+    )
+  ){
+    return c.redirect(link, 302)
+  }
+  const data = await fetch(`https://scratchdb.lefty.one/v3/project/info/${projectId}`).then(res => res.json())
+
+  if (data.error) {
+    return c.notFound()
+  }
+  
   return c.html(html`<!DOCTYPE HTML>${
     <html lang="ja">
       <head>
@@ -38,7 +57,13 @@ app.get('/p/:projectId', async c => {
         <title>Ogratch</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="" />
-        <meta http-equiv="refresh" content={`0;URL='${link}'`} />
+        
+        <meta property="og:site_name" content="Scratch" />
+        <meta property="og:title" content={data.title} />
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={link} />
+        <meta property="og:image" content={`https://uploads.scratch.mit.edu/get_image/project/${projectId}_480x360.png`} />
+        <meta property="og:description" content={sara.description} />
       </head>
       <body>
         <a href={link}>Push!</a>
