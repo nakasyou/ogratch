@@ -42,11 +42,13 @@ app.get('/p/:projectId', async c => {
       userAgent.includes('slackbot')
     )
   ){
+    console.log('nonbot')
     return c.redirect(link, 302)
   }
   const data = await fetch(`https://scratchdb.lefty.one/v3/project/info/${projectId}`).then(res => res.json())
 
   if (data.error) {
+    console.log("err")
     return c.notFound()
   }
   console.log('bot')
