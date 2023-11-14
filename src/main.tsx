@@ -59,7 +59,7 @@ app.get('/p/:projectId', async c => {
   }
   return c.html(html`<!DOCTYPE HTML>${
     <html lang="ja">
-      <head>
+      <head prefix="og: http://ogp.me/ns#">
         <meta charset="UTF-8" />
         <title>Ogratch</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
