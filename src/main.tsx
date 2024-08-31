@@ -49,12 +49,11 @@ app.get('/p/:projectId', async c => {
     console.log('nonbot')
     return c.redirect(link, 302)
   }
-  let data = await fetch(`https://scratchdb.lefty.one/v3/project/info/${projectId}`).then(res => res.json())
+  let data = await fetch(`https://trampoline.turbowarp.org/api/projects/${projectId}`).then(res => res.json())
 
   if (data.error) {
     data = {
       title: 'unknown', description: 'unknown',
-
     }
   }
   return c.html(html`<!DOCTYPE HTML>${
