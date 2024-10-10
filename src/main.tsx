@@ -56,7 +56,16 @@ app.get('/p/:projectId', async c => {
       title: 'unknown', description: 'unknown',
     }
   }
-  const desc = `👁️${data.stats.views} ❤️${data.stats.loves} ⭐${data.stats.favorites} 🌀${data.stats.remixes}\n${data.description}`
+  const desc = data.description}
+  const embed = {
+    author_name : `👁️${data.stats.views} ❤️${data.stats.loves} ⭐${data.stats.favorites} 🌀${data.stats.remixes}`,
+    author_url: link,
+    provider_name: "ogratch",
+    provider_url: "https://github.com/nakasyou/ogratch",
+    title: "Scratch",
+    "type": "link",
+    "version": "1.0"
+  }
   return c.html(html`<!DOCTYPE HTML>${
     <html lang="ja">
       <head prefix="og: http://ogp.me/ns#">
@@ -72,6 +81,7 @@ app.get('/p/:projectId', async c => {
         <meta property="og:image" content={`https://ogratch.deno.dev/thumbnail/p/${projectId}`} />
         <meta property="og:description" content={desc} />
         <meta name="twitter:card" content="summary_large_image" />
+        <link rel="alternate" href={`https://ogratch.deno.dev/echo-json/${JSON.stringify(encodeURIComponent(embed))}`} type="application/json+oembed" title="Scratch" />
       </head>
       <body>
         <a href={link}>Push!</a>
@@ -79,5 +89,6 @@ app.get('/p/:projectId', async c => {
     </html>
   }`)
 })
+app.get('/echo-json/:json', c => c.json(JSON.parse(c.req.param('json'))))
 
 Deno.serve(app.fetch)
