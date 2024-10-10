@@ -56,7 +56,7 @@ app.get('/p/:projectId', async c => {
       title: 'unknown', description: 'unknown',
     }
   }
-  const desc = `👁️${dara.stats.views} ❤️${data.stats.loves} ⭐${data.stats.favorites} 🌀${data.stats.remixes}\n${data.description}`
+  const desc = `👁️${data.stats.views} ❤️${data.stats.loves} ⭐${data.stats.favorites} 🌀${data.stats.remixes}\n${data.description}`
   return c.html(html`<!DOCTYPE HTML>${
     <html lang="ja">
       <head prefix="og: http://ogp.me/ns#">
