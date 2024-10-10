@@ -58,8 +58,8 @@ app.get('/p/:projectId', async c => {
   }
   const desc = data.description
   const embed = {
-    author_name : `👁️${data.stats.views} ❤️${data.stats.loves} ⭐${data.stats.favorites} 🌀${data.stats.remixes}`,
-    author_url: link,
+    author_name : `👁️${data.stats.views} ❤️${data.stats.loves} ⭐${data.stats.favorites} 🌀${data.stats.remixes} | ${data.author.username}`,
+    author_url: `https://scratch.mit.edu/users/${data.author.username}`,
     provider_name: "ogratch",
     provider_url: "https://github.com/nakasyou/ogratch",
     title: "Scratch",
