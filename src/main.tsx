@@ -56,7 +56,7 @@ app.get('/p/:projectId', async c => {
       title: 'unknown', description: 'unknown',
     }
   }
-  const desc = data.description}
+  const desc = data.description
   const embed = {
     author_name : `👁️${data.stats.views} ❤️${data.stats.loves} ⭐${data.stats.favorites} 🌀${data.stats.remixes}`,
     author_url: link,
