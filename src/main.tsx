@@ -81,7 +81,7 @@ app.get('/p/:projectId', async c => {
         <meta property="og:image" content={`https://ogratch.deno.dev/thumbnail/p/${projectId}`} />
         <meta property="og:description" content={desc} />
         <meta name="twitter:card" content="summary_large_image" />
-        <link rel="alternate" href={`https://ogratch.deno.dev/echo-json/${JSON.stringify(encodeURIComponent(embed))}`} type="application/json+oembed" title="Scratch" />
+        <link rel="alternate" href={`https://ogratch.deno.dev/echo-json/${encodeURIComponent(JSON.stringify(embed))}`} type="application/json+oembed" title="Scratch" />
       </head>
       <body>
         <a href={link}>Push!</a>
