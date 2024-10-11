@@ -1,8 +1,15 @@
 {
-  "imports": { "hono": "jsr:@hono/hono@^4.6.4" },
+  "imports": {
+    "hono": "jsr:@hono/hono@^4.6.4"
+  },
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxFragmentFactory": "Fragment",
-    "jsxImportSource": "hono/jsx" 
+    "jsxImportSource": "hono/jsx"
+  },
+  "fmt": {
+    "lineWidth": 2,
+    "semiColons": false,
+    "singleQuote": true
   }
 }
