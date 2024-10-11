@@ -4,7 +4,7 @@ import { Hono, type Context } from 'hono'
 import { jsx, Fragment } from 'hono/middleware'
 import { html } from 'hono/helper'
 
-const app = new Hono()
+const app = new Hono({ strict: false })
 
 app.get('/', async c => {
   return c.html(html`<!DOCTYPE HTML>${
