@@ -90,6 +90,9 @@ app.get('/p/:projectId', async c => {
     </html>
   }`)
 })
+app.get('/projects/:projectId', async c => {
+  return app.request(c.req.raw)
+})
 app.get('/echo-json/:json', c => c.json(JSON.parse(c.req.param('json'))))
 
 Deno.serve(app.fetch)
