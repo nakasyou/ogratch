@@ -12,7 +12,7 @@ const app =
 app
   .get(
     '/',
-    async (
+    (
       c,
     ) => {
       return c
