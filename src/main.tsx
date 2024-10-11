@@ -1,8 +1,5 @@
-/** @jsx jsx */
-/** @jsxFrag Fragment */
 import { Hono } from 'hono'
-import { jsx, Fragment } from 'hono/middleware'
-import { html } from 'hono/helper'
+import { html } from 'hono/html'
 
 const app = new Hono({ strict: false })
 

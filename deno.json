@@ -1,7 +1,8 @@
 {
-  "imports": {
-    "hono": "https://deno.land/x/hono/mod.ts",
-    "hono/middleware": "https://deno.land/x/hono/middleware.ts",
-    "hono/helper": "https://deno.land/x/hono/helper.ts"
+  "imports": { "hono": "jsr:@hono/hono@^4.6.4" },
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxFragmentFactory": "Fragment",
+    "jsxImportSource": "hono/jsx" 
   }
 }
