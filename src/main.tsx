@@ -1,6 +1,6 @@
 /** @jsx jsx */
 /** @jsxFrag Fragment */
-import { Hono, type Context } from 'hono'
+import { Hono, type Handler } from 'hono'
 import { jsx, Fragment } from 'hono/middleware'
 import { html } from 'hono/helper'
 
@@ -33,7 +33,7 @@ app.get('/thumbnail/p/:thumbnailId', async c => {
   return await fetch(`https://uploads.scratch.mit.edu/get_image/project/${projectId}_480x360.png`)
 })
 
-const prjRoute: Context = async c => {
+const prjRoute: Handler = async c => {
   const projectId = c.req.param('projectId')
   const link = `https://scratch.mit.edu/projects/${projectId}`
   
