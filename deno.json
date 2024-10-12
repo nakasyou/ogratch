@@ -7,7 +7,6 @@
     "jsxImportSource": "hono/jsx"
   },
   "fmt": {
-    "lineWidth": 2,
     "semiColons": false,
     "singleQuote": true
   }

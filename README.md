@@ -7,5 +7,4 @@ TwitterやDiscordで使えます。
 
 ### Project
 
-`https://ogratch.deno.dev/p/{project_id}`
-プロジェクトです。
+`https://ogratch.deno.dev/p/{project_id}` プロジェクトです。
