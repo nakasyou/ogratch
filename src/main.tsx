@@ -1,4 +1,7 @@
-import { Hono } from 'hono'
+import {
+  type Handler,
+  Hono,
+} from 'hono'
 import { html } from 'hono/html'
 
 const app =
@@ -73,9 +76,9 @@ app
       )
     },
   )
-app
-  .get(
-    '/p/:projectId',
+
+const projRoute:
+  Handler =
     async (
       c,
     ) => {
@@ -249,8 +252,18 @@ app
             </html>
           )}`,
         )
-    },
+    }
+app
+  .get(
+    '/p/:projectId',
+    projRoute,
   )
+app
+  .get(
+    '/projects/:projectId',
+    projRoute,
+  )
+
 app
   .get(
     '/echo-json/:json',
