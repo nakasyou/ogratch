@@ -1,4 +1,7 @@
-import { Hono, type Handler } from 'hono'
+import {
+  Hono,
+  type Handler
+} from 'hono'
 import { html } from 'hono/html'
 
 const app =
