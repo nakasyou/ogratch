@@ -109,10 +109,11 @@ app.get('/projects/:projectId', async (c) => {
           <meta name='twitter:card' content='summary_large_image' />
           <link
             rel='alternate'
-            href={`https://ogratch.deno.dev/echo-json/${encodeURIComponent(
-              JSON.stringify(embed),
-            )
-              }`}
+            href={`https://ogratch.deno.dev/echo-json/${
+              encodeURIComponent(
+                JSON.stringify(embed),
+              )
+            }`}
             type='application/json+oembed'
             title='Scratch'
           />
@@ -160,10 +161,11 @@ app.get('/users/:username', async (c) => {
           <meta name='twitter:card' content='summary' />
           <link
             rel='alternate'
-            href={`https://ogratch.deno.dev/echo-json/${encodeURIComponent(
-              JSON.stringify(embed),
-            )
-              }`}
+            href={`https://ogratch.deno.dev/echo-json/${
+              encodeURIComponent(
+                JSON.stringify(embed),
+              )
+            }`}
             type='application/json+oembed'
             title='Scratch'
           />
