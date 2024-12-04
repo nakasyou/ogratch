@@ -184,6 +184,6 @@ scratchRoute.get('/users/:username', async (c) => {
   )
 })
 
-app.mount('/', scratchRoute)
+app.route('/', scratchRoute)
 
 Deno.serve(app.fetch)
