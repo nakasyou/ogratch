@@ -136,7 +136,7 @@ scratchRoute.get('/projects/:projectId', async (c) => {
 scratchRoute.get('/users/:username', async (c) => {
   const username = c.req.param('username')
   const res = await fetch(
-    `https://trampoline.turbowarp.org/proxy/users/${username}`
+    `https://trampoline.turbowarp.org/proxy/users/${username}`,
   )
   if (!res.ok) {
     return c.notFound()
