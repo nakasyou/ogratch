@@ -43,7 +43,13 @@ app.get('/thumbnail/p/:thumbnailId', async (c) => {
 app.get('/echo-json/:json', (c) => c.json(JSON.parse(c.req.param('json'))))
 
 // ----- Scratch compatible routes -----
-app.use('*', async (c, next) => {
+const scratchRoute = new Hono<{
+  Variables: {
+    link: string
+  }
+}>()
+
+scratchRoute.use('*', async (c, next) => {
   c.set('link', `https://scratch.mit.edu${c.req.path}`)
 
   const userAgent = (c.req.header('User-Agent') || '').toLowerCase()
@@ -63,7 +69,7 @@ app.use('*', async (c, next) => {
   await next()
 })
 
-app.get('/projects/:projectId', async (c) => {
+scratchRoute.get('/projects/:projectId', async (c) => {
   const projectId = c.req.param('projectId')
 
   let data = await fetch(
@@ -126,7 +132,7 @@ app.get('/projects/:projectId', async (c) => {
   )
 })
 
-app.get('/users/:username', async (c) => {
+scratchRoute.get('/users/:username', async (c) => {
   const username = c.req.param('username')
   const res = await fetch(`https://api.scratch.mit.edu/users/${username}`)
   if (!res.ok) {
@@ -177,5 +183,7 @@ app.get('/users/:username', async (c) => {
     )}`,
   )
 })
+
+app.mount('/', scratchRoute)
 
 Deno.serve(app.fetch)
