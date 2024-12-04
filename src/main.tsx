@@ -31,8 +31,7 @@ app.get('/', (c) =>
         </body>
       </html>
     )}`,
-  )
-)
+  ))
 
 app.get('/thumbnail/p/:thumbnailId', async (c) => {
   const projectId = c.req.param('thumbnailId')
