@@ -31,7 +31,8 @@ app.get('/', (c) =>
         </body>
       </html>
     )}`,
-  ))
+  )
+)
 
 app.get('/thumbnail/p/:thumbnailId', async (c) => {
   const projectId = c.req.param('thumbnailId')
@@ -134,7 +135,7 @@ scratchRoute.get('/projects/:projectId', async (c) => {
 
 scratchRoute.get('/users/:username', async (c) => {
   const username = c.req.param('username')
-  const res = await fetch(`https://api.scratch.mit.edu/users/${username}`)
+  const res = await fetch(`https://trampoline.turbowarp.org/proxy/users/${username}`)
   if (!res.ok) {
     return c.notFound()
   }
