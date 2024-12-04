@@ -136,7 +136,7 @@ scratchRoute.get('/users/:username', async (c) => {
   const username = c.req.param('username')
   const res = await fetch(`https://api.scratch.mit.edu/users/${username}`)
   if (!res.ok) {
-    return
+    return c.notFound()
   }
   const data = await res.json()
 
