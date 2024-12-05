@@ -1,7 +1,7 @@
-import { type Handler, Hono } from 'hono'
+import { Hono } from 'hono'
 import { html } from 'hono/html'
 
-const app = new Hono({ strict: false })
+const app = new Hono()
 
 app.get('/', (c) =>
   c.html(
@@ -32,6 +32,7 @@ app.get('/', (c) =>
       </html>
     )}`,
   ))
+
 app.get('/thumbnail/p/:thumbnailId', async (c) => {
   const projectId = c.req.param('thumbnailId')
   return await fetch(
@@ -39,23 +40,38 @@ app.get('/thumbnail/p/:thumbnailId', async (c) => {
   )
 })
 
-const projRoute: Handler = async (c) => {
-  const projectId = c.req.param('projectId')
-  const link = `https://scratch.mit.edu/projects/${projectId}`
+app.get('/echo-json/:json', (c) => c.json(JSON.parse(c.req.param('json'))))
+
+// ----- Scratch compatible routes -----
+const scratchRoute = new Hono<{
+  Variables: {
+    link: string
+  }
+}>({ strict: false })
+
+scratchRoute.use('*', async (c, next) => {
+  c.set('link', `https://scratch.mit.edu${c.req.path}`)
 
   const userAgent = (c.req.header('User-Agent') || '').toLowerCase()
   console.log(userAgent)
-  if (
-    !(
-      userAgent.includes('twitter') ||
-      userAgent.includes('discord') ||
-      userAgent.includes('facebook') ||
-      userAgent.includes('slackbot')
-    )
-  ) {
+
+  const isNotBot = !(
+    userAgent.includes('twitter') ||
+    userAgent.includes('discord') ||
+    userAgent.includes('facebook') ||
+    userAgent.includes('slackbot')
+  )
+
+  if (isNotBot) {
     console.log('nonbot')
-    return c.redirect(link, 302)
+    return c.redirect(c.var.link, 302)
   }
+  await next()
+})
+
+scratchRoute.get('/projects/:projectId', async (c) => {
+  const projectId = c.req.param('projectId')
+
   let data = await fetch(
     `https://trampoline.turbowarp.org/api/projects/${projectId}`,
   ).then((res) => res.json())
@@ -69,7 +85,7 @@ const projRoute: Handler = async (c) => {
   const desc = data.description
   const embed = {
     author_name:
-      `👁️${data.stats.views} ❤️${data.stats.loves} ⭐${data.stats.favorites} 🌀${data.stats.remixes} | ${data.author.username}`,
+      `👁️${data.stats.views} ❤️${data.stats.loves} ⭐${data.stats.favorites} 🌀${data.stats.remixes} | @${data.author.username}`,
     author_url: `https://scratch.mit.edu/users/${data.author.username}`,
     author_icon: data.author.profile.images['90x90'],
     provider_name: 'ogratch',
@@ -80,7 +96,7 @@ const projRoute: Handler = async (c) => {
   }
   return c.html(
     html`<!DOCTYPE HTML>${(
-      <html lang='ja'>
+      <html>
         <head prefix='og: http://ogp.me/ns#'>
           <meta charset='UTF-8' />
           <title>Ogratch</title>
@@ -90,7 +106,7 @@ const projRoute: Handler = async (c) => {
           <meta property='og:site_name' content='Scratch' />
           <meta property='og:title' content={data.title} />
           <meta property='og:type' content='article' />
-          <meta property='og:url' content={link} />
+          <meta property='og:url' content={c.var.link} />
           <meta
             property='og:image'
             content={`https://ogratch.deno.dev/thumbnail/p/${projectId}`}
@@ -109,15 +125,68 @@ const projRoute: Handler = async (c) => {
           />
         </head>
         <body>
-          <a href={link}>Push!</a>
+          <a href={c.var.link}>Push!</a>
         </body>
       </html>
     )}`,
   )
-}
-app.get('/p/:projectId', projRoute)
-app.get('/projects/:projectId', projRoute)
+})
 
-app.get('/echo-json/:json', (c) => c.json(JSON.parse(c.req.param('json'))))
+scratchRoute.get('/users/:username', async (c) => {
+  const username = c.req.param('username')
+  const res = await fetch(
+    `https://trampoline.turbowarp.org/proxy/users/${username}`,
+  )
+  if (!res.ok) {
+    return c.notFound()
+  }
+  const data = await res.json()
+
+  const embed = {
+    author_name: `@${data.username}`,
+    author_url: c.var.link,
+    author_icon: data.profile.images['90x90'],
+    provider_name: 'ogratch',
+    provider_url: 'https://github.com/nakasyou/ogratch',
+    title: 'Scratch',
+    type: 'link',
+    version: '1.0',
+  }
+  return c.html(
+    html`<!DOCTYPE HTML>${(
+      <html>
+        <head prefix='og: http://ogp.me/ns#'>
+          <meta charset='UTF-8' />
+          <title>Ogratch</title>
+          <meta name='viewport' content='width=device-width, initial-scale=1' />
+          <meta name='description' content='' />
+
+          <meta property='og:site_name' content='Scratch' />
+          <meta property='og:title' content={data.username} />
+          <meta property='og:type' content='article' />
+          <meta property='og:url' content={c.var.link} />
+          <meta property='og:description' content={data.profile.bio} />
+          <meta name='og:image' content={data.profile.images['90x90']} />
+          <meta name='twitter:card' content='summary' />
+          <link
+            rel='alternate'
+            href={`https://ogratch.deno.dev/echo-json/${
+              encodeURIComponent(
+                JSON.stringify(embed),
+              )
+            }`}
+            type='application/json+oembed'
+            title='Scratch'
+          />
+        </head>
+        <body>
+          <a href={c.var.link}>Push!</a>
+        </body>
+      </html>
+    )}`,
+  )
+})
+
+app.route('/', scratchRoute)
 
 Deno.serve(app.fetch)
