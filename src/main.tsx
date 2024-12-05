@@ -145,7 +145,8 @@ scratchRoute.get('/users/:username', async (c) => {
   const embed = {
     author_name: `@${data.username}`,
     author_url: c.var.link,
-    author_icon: data.profile.images['90x90'],    provider_name: 'ogratch',
+    author_icon: data.profile.images['90x90'],
+    provider_name: 'ogratch',
     provider_url: 'https://github.com/nakasyou/ogratch',
     title: 'Scratch',
     type: 'link',
