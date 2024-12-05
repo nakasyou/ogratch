@@ -85,7 +85,7 @@ scratchRoute.get('/projects/:projectId', async (c) => {
   const desc = data.description
   const embed = {
     author_name:
-      `👁️${data.stats.views} ❤️${data.stats.loves} ⭐${data.stats.favorites} 🌀${data.stats.remixes} | ${data.author.username}`,
+      `👁️${data.stats.views} ❤️${data.stats.loves} ⭐${data.stats.favorites} 🌀${data.stats.remixes} | @${data.author.username}`,
     author_url: `https://scratch.mit.edu/users/${data.author.username}`,
     author_icon: data.author.profile.images['90x90'],
     provider_name: 'ogratch',
@@ -143,9 +143,7 @@ scratchRoute.get('/users/:username', async (c) => {
   const data = await res.json()
 
   const embed = {
-    author_name: data.username,
-    author_url: c.var.link,
-    author_icon: data.profile.images['90x90'],
+    author_name: `@${images['90x90']}`,
     provider_name: 'ogratch',
     provider_url: 'https://github.com/nakasyou/ogratch',
     title: 'Scratch',
