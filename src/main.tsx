@@ -1,7 +1,7 @@
 import { Hono } from 'hono'
 import { html } from 'hono/html'
 
-const app = new Hono({ strict: false })
+const app = new Hono()
 
 app.get('/', (c) =>
   c.html(
@@ -47,7 +47,7 @@ const scratchRoute = new Hono<{
   Variables: {
     link: string
   }
-}>()
+}>({ strict: false })
 
 scratchRoute.use('*', async (c, next) => {
   c.set('link', `https://scratch.mit.edu${c.req.path}`)
@@ -166,6 +166,7 @@ scratchRoute.get('/users/:username', async (c) => {
           <meta property='og:type' content='article' />
           <meta property='og:url' content={c.var.link} />
           <meta property='og:description' content={data.profile.bio} />
+          <meta name='og:image' content={data.profile.images['90x90']} />
           <meta name='twitter:card' content='summary' />
           <link
             rel='alternate'
